@@ -28,14 +28,18 @@ body {
     margin: 5px;
     background-color: #323232;
     border-radius: 5px;
+    color: white;
+    text-align: end;
+    padding-top: 40px;
+
+
 
 }
 
 .button-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 5px;
     background-color: #2b2b28;
     height: 80%;
     width: 100%;
@@ -44,8 +48,8 @@ body {
 }
 
 .button {
-    height: 22%;
-    width: 22%;
+    height: 100%;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;

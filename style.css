@@ -9,7 +9,7 @@
     padding: 0;
 }
 
-.calculator-grid {
+#calculator-grid {
     display: grid;
     justify-content: center;
     align-content: center;
@@ -20,7 +20,7 @@
 
 }
 
-.calculator-grid>button {
+#calculator-grid>button {
     cursor: pointer;
     font-size: 2rem;
     border: 1px solid #7b998e;
@@ -34,7 +34,7 @@
     grid-column: span 2;
 }
 
-.output {
+#output {
     grid-column: 1 / -1;
     background-color: #282828;
     border-radius: 5px;

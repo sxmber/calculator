@@ -1,19 +1,42 @@
 const output = document.getElementById('output');
 const numbers = document.getElementsByClassName('number');
-console.log(numbers[0].textContent)
-let display;
+const operators = document.getElementsByClassName('operators');
+const buttons = document.querySelectorAll('div#calculator-grid button')
+let display = ""
+let firstNum = ""
+let array = [];
+let sum;
+let currentOperation = null;
+console.log(buttons)
 
-displayNumbers();
+function inputOperand(operand){
+    array.push(operand);
+}
 
-function displayNumbers(){
-    //take button text content and update output text content
-    for (i=0;i<numbers.length;i++){
-        numbers[i].addEventListener('click', (e) => {
-            console.log(e.target.textContent)
-            output.textContent += e.target.textContent;
+function buttonListener() {
+    for (i=0;i<buttons.length;i++){
+        buttons[i].addEventListener('click', (e) => {
+            if(e.target.className == "number"){
+                display += e.target.textContent
+                updateDisplay(display);
+            }
+            else if(e.target.className == "operators"){
+                currentOperation = e.target.textContent;
+                inputOperand(output.textContent);
+                display = "";
+
+            }
+            else if(e.target.className == "span-two equals"){
+                inputOperand(output.textContent);
+                updateDisplay(operate(currentOperation, parseInt(array[0]), parseInt(array[1])))
+            }
         })
-        
     }
+}
+buttonListener()
+function updateDisplay(display){
+    //take button text content and update output text content
+   output.textContent = display;
 }
 
 function add(num1, num2) {
@@ -34,16 +57,16 @@ function divide(num1, num2) {
 
 function operate(operator, num1, num2) {
     switch (operator) {
-        case 'add':
+        case '+':
             return add(num1, num2);
             break;
-        case 'subtract':
+        case '-':
             return subtract(num1, num2);
             break;
-        case 'multiply':
+        case '*':
             return multiply(num1, num2);
             break;
-        case 'divide':
+        case '÷':
             return divide(num1, num2);
             break;
         default:

@@ -1,8 +1,14 @@
+//TODO
+//ADD REMARK WHEN TRYING TO DIVIDE BY 0
+//MAKE "=" DO NOTHING IF NOT ALL INPUTS ARE ENTERED
+
 const output = document.getElementById('output');
 const numbers = document.getElementsByClassName('number');
 const operators = document.getElementsByClassName('operators');
 const buttons = document.querySelectorAll('div#calculator-grid button')
 let input = ""
+total = "";
+secondNum = "";
 let array = [];
 let currentOperation = null;
 
@@ -15,31 +21,53 @@ function buttonListener() {
 
             }
             else if (e.target.className == "operators") {
-                inputOperand(input);
-                inputOperand(e.target.textContent);
+                if (currentOperation !== null) {
+                    evaluate();
+                }
+                currentOperation = e.target.textContent;
+                inputOperand(output.textContent);
                 input = "";
-
 
             }
             else if (e.target.className == "span-two equals") {
-                inputOperand(input);
-                updateDisplay(operate(array));
+                evaluate();
             }
             else if (e.target.className == "del") {
                 input = input.slice(0, -1);
                 output.textContent = input;
+            }
+            else if (e.target.className == "span-two clear") {
+                clear();
+            }
+            else if (e.target.className == ".") {
+                input += e.target.textContent;
+                updateDisplay(input);
             }
         })
     }
 }
 buttonListener()
 
+function evaluate() {
+    secondNum = output.textContent;
+    updateDisplay(operate(currentOperation, total, secondNum));
+    currentOperation = null;
+
+}
+
 function inputOperand(operand) {
-    array.push(operand);
+    total = operand;
 }
 
 function updateDisplay(display) {
     output.textContent = display;
+}
+
+function clear() {
+    output.textContent = "";
+    input = "";
+    total = "";
+    secondNum = "";
 }
 
 function add(num1, num2) {
@@ -58,25 +86,23 @@ function divide(num1, num2) {
     return num1 / num2;
 }
 
-function operate(array) {
-    let result = parseFloat(array[0]);
-    console.log(result)
-    for (i = 1; i < array.length; i = i + 2) {
-        switch (array[i]) {
-            case '+':
-                result += parseFloat(array[i + 1]);
-                break;
-            case '-':
-                result += parseFloat(array[i + 1]);
-                break;
-            case '*':
-                result *= parseFloat(array[i + 1]);
-                break;
-            case '÷':
-                result /= parseFloat(array[i + 1]);
-                break;
-        }
-    }
-    return result;
 
+
+function operate(operation, num1, num2) {
+    num1 = parseFloat(num1);
+    num2 = parseFloat(num2);
+    switch (operation) {
+        case '+':
+            return add(num1, num2);
+            break;
+        case '-':
+            return subtract(num1, num2);
+            break;
+        case '*':
+            return multiply(num1, num2);
+            break;
+        case '÷':
+            return divide(num1, num2);
+            break;
+    }
 }

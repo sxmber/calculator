@@ -1,6 +1,4 @@
 //TODO
-//ADD REMARK WHEN TRYING TO DIVIDE BY 0
-//MAKE "=" DO NOTHING IF NOT ALL INPUTS ARE ENTERED
 
 const output = document.getElementById('output');
 const numbers = document.getElementsByClassName('number');
@@ -8,7 +6,7 @@ const operators = document.getElementsByClassName('operators');
 const buttons = document.querySelectorAll('div#calculator-grid button')
 let input = ""
 total = "";
-secondNum = "";
+secondNum = null;
 let array = [];
 let currentOperation = null;
 
@@ -30,7 +28,10 @@ function buttonListener() {
 
             }
             else if (e.target.className == "span-two equals") {
-                evaluate();
+                if(secondNum == null){
+                    evaluate();
+                }
+                
             }
             else if (e.target.className == "del") {
                 input = input.slice(0, -1);
@@ -86,8 +87,6 @@ function divide(num1, num2) {
     return num1 / num2;
 }
 
-
-
 function operate(operation, num1, num2) {
     num1 = parseFloat(num1);
     num2 = parseFloat(num2);
@@ -102,7 +101,9 @@ function operate(operation, num1, num2) {
             return multiply(num1, num2);
             break;
         case '÷':
-            return divide(num1, num2);
+            if(num2 == 0){
+                return "nah";
+            }else return divide(num1, num2);
             break;
     }
 }
